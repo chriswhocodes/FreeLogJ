@@ -29,7 +29,7 @@ public class Logger
 		ERROR(" ERR ", 4),
 		FATAL(" FTL ", 5);
 
-		private final String display;
+		final String display;
 		private final int level;
 
 		LogLevel(String display, int level)
@@ -134,9 +134,9 @@ public class Logger
 		log(LogLevel.ERROR, message, args);
 	}
 
-	public void error(String message, Throwable throwable, Object... args)
+	public void error(String message, Throwable throwable)
 	{
-		log(LogLevel.ERROR, message, args);
+		log(LogLevel.ERROR, message);
 		throwable.printStackTrace(printStream);
 	}
 
@@ -145,9 +145,9 @@ public class Logger
 		log(LogLevel.FATAL, message, args);
 	}
 
-	public void fatal(String message, Throwable throwable, Object... args)
+	public void fatal(String message, Throwable throwable)
 	{
-		log(LogLevel.FATAL, message, args);
+		log(LogLevel.FATAL, message);
 		throwable.printStackTrace(printStream);
 	}
 

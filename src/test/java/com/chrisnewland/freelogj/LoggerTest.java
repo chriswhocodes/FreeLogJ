@@ -4,7 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
 
 import static org.junit.Assert.*;
 
@@ -23,6 +26,8 @@ public class LoggerTest
 		String streamString = baos.toString();
 
 		assertEquals(streamString.substring(streamString.length() - message.length()), message);
+
+		assertTrue(streamString.contains(logLevel.display));
 
 		baos.reset();
 	}
@@ -261,6 +266,22 @@ public class LoggerTest
 		String contents = baos.toString();
 
 		assertTrue(contents.contains("java.lang.RuntimeException: oops\n"));
-		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testExceptions(LoggerTest.java:259)\n"));
+		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testExceptions(LoggerTest.java:264)\n"));
+	}
+
+	@Test
+	public void testLoggingToFile() throws Exception
+	{
+		File tempFile = Files.createTempFile("test", ".log").toFile();
+
+		printStream = new PrintStream(new FileOutputStream(tempFile));
+
+		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
+
+		logger.info("Name:{} Age:{} Location:{}", "Chris Newland", 999, "QueingForCompilation");
+
+		String contentsFromFile = new String(Files.readAllBytes(tempFile.toPath()));
+
+		assertTrue(contentsFromFile.endsWith("Name:Chris Newland Age:999 Location:QueingForCompilation\n"));
 	}
 }
