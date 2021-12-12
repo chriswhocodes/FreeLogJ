@@ -5,7 +5,9 @@ In the meantime enjoy this simple logging framework^W class.
 
 ### Features:
 
-- It's a single Class! (+Enum). Easy to understand and audit.
+- It's a single tiny Class! (+Enum). Easy to understand and audit.
+
+- There's a LoggerFactory for convenience / easier drop-in replacement.
 
 - API similar to SLF4j, varargs log parameters are substituted for braces {}
 
@@ -13,17 +15,15 @@ In the meantime enjoy this simple logging framework^W class.
 
 - error() and fatal() have a no-varargs signature that accepts a Throwable to get a stack trace.
 
-- Log levels: TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Log level is not modifiable after logger is created.
+- Log levels: TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Log level is not modifiable after Logger is constructed.
 
-- No config files. You can pass your own DateFormat and PrintStream to the constructor.
+- No config files. You can pass your own DateFormat and PrintStream to the Logger constructor or LoggerFactory initialise() method.
 
-- Default PrintStream is System.out, if you want file logging then pass a PrintStream that wraps an OutputStream.
+- Default PrintStream is System.out, if you want file logging then pass a PrintStream that wraps a file-based OutputStream.
 
 ### Caveats:
 
-- No LoggerFactory class. If enough people ask I'll make one (for easier drop-in replacement).
-
-- Performance is probably meh. If you're logging that much then consider JFR events!
+- Performance is probably meh. If you're logging that much text then consider whether monitoring/telemetry/JFR would suit you better.
 
 ### But seriously
 
