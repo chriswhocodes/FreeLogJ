@@ -22,12 +22,7 @@ public class Logger
 {
 	public enum LogLevel
 	{
-		TRACE(" TRC ", 0),
-		DEBUG(" DBG ", 1),
-		INFO(" INF ", 2),
-		WARN(" WRN ", 3),
-		ERROR(" ERR ", 4),
-		FATAL(" FTL ", 5);
+		TRACE(" TRC ", 0), DEBUG(" DBG ", 1), INFO(" INF ", 2), WARN(" WRN ", 3), ERROR(" ERR ", 4), FATAL(" FTL ", 5);
 
 		final String display;
 		private final int level;
@@ -39,7 +34,7 @@ public class Logger
 		}
 	}
 
-	public static final DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+	static final DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
 	private static final String BRACES = "{}";
 
@@ -165,9 +160,7 @@ public class Logger
 			builder.append(dateFormat.format(new Date(System.currentTimeMillis())));
 		}
 
-		builder.append(logLevel.display)
-			   .append(className)
-			   .append(' ');
+		builder.append(logLevel.display).append(className).append(' ');
 
 		if (message != null && args != null && args.length > 0)
 		{
@@ -198,5 +191,35 @@ public class Logger
 		}
 
 		printStream.println(builder);
+	}
+
+	public static void main(String[] args)
+	{
+		final Logger logger = LoggerFactory.getLogger(Logger.class);
+
+		for (int i = 0; i < 10; i++)
+		{
+			final int id = i;
+
+			new Thread(new Runnable()
+			{
+				@Override public void run()
+				{
+					for (int i = 0; i < 10; i++)
+					{
+						logger.info("Print id " + i + " from thread " + id);
+
+						try
+						{
+							Thread.sleep(1000);
+						}
+						catch (InterruptedException e)
+						{
+							e.printStackTrace();
+						}
+					}
+				}
+			}).start();
+		}
 	}
 }

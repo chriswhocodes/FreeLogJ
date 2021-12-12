@@ -1,3 +1,5 @@
+// Copyright (c) 2021, Chris Newland (@chriswhocodes)
+
 package com.chrisnewland.freelogj;
 
 import org.junit.Before;
@@ -32,8 +34,7 @@ public class LoggerTest
 		baos.reset();
 	}
 
-	@Before
-	public void setup()
+	@Before public void setup()
 	{
 		logLevel = Logger.LogLevel.INFO;
 
@@ -42,8 +43,7 @@ public class LoggerTest
 		printStream = new PrintStream(baos);
 	}
 
-	@Test
-	public void testParamAtStart()
+	@Test public void testParamAtStart()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -52,8 +52,7 @@ public class LoggerTest
 		checkContents("Pay open source maintainers!");
 	}
 
-	@Test
-	public void testParamAtEnd()
+	@Test public void testParamAtEnd()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -62,8 +61,7 @@ public class LoggerTest
 		checkContents("Hello Chris");
 	}
 
-	@Test
-	public void testParamInMiddle()
+	@Test public void testParamInMiddle()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -72,8 +70,7 @@ public class LoggerTest
 		checkContents("I am a simple logger");
 	}
 
-	@Test
-	public void testLotOfParams()
+	@Test public void testLotOfParams()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -82,8 +79,7 @@ public class LoggerTest
 		checkContents("Name:Chris Newland Age:999 Location:QueingForCompilation");
 	}
 
-	@Test
-	public void testNoParams()
+	@Test public void testNoParams()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -92,8 +88,7 @@ public class LoggerTest
 		checkContents("This is a simple message");
 	}
 
-	@Test
-	public void testNullParams()
+	@Test public void testNullParams()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -102,8 +97,7 @@ public class LoggerTest
 		checkContents("value:{}");
 	}
 
-	@Test
-	public void testMissingParams()
+	@Test public void testMissingParams()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -112,8 +106,7 @@ public class LoggerTest
 		checkContents("Name:Chris Newland Age:999 Location:{}");
 	}
 
-	@Test
-	public void testNullMessage()
+	@Test public void testNullMessage()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -122,8 +115,7 @@ public class LoggerTest
 		checkContents("null");
 	}
 
-	@Test
-	public void testLogLevelTrace()
+	@Test public void testLogLevelTrace()
 	{
 		logLevel = Logger.LogLevel.TRACE;
 
@@ -141,8 +133,7 @@ public class LoggerTest
 		assertTrue(logger.isFatalEnabled());
 	}
 
-	@Test
-	public void testLogLevelDebug()
+	@Test public void testLogLevelDebug()
 	{
 		logLevel = Logger.LogLevel.DEBUG;
 
@@ -164,8 +155,7 @@ public class LoggerTest
 		assertTrue(logger.isFatalEnabled());
 	}
 
-	@Test
-	public void testLogLevelInfo()
+	@Test public void testLogLevelInfo()
 	{
 		logLevel = Logger.LogLevel.INFO;
 
@@ -187,8 +177,7 @@ public class LoggerTest
 		assertTrue(logger.isFatalEnabled());
 	}
 
-	@Test
-	public void testLogLevelWarn()
+	@Test public void testLogLevelWarn()
 	{
 		logLevel = Logger.LogLevel.WARN;
 
@@ -210,8 +199,7 @@ public class LoggerTest
 		assertTrue(logger.isFatalEnabled());
 	}
 
-	@Test
-	public void testLogLevelError()
+	@Test public void testLogLevelError()
 	{
 		logLevel = Logger.LogLevel.ERROR;
 
@@ -233,8 +221,7 @@ public class LoggerTest
 		assertTrue(logger.isFatalEnabled());
 	}
 
-	@Test
-	public void testLogLevelFatal()
+	@Test public void testLogLevelFatal()
 	{
 		logLevel = Logger.LogLevel.FATAL;
 
@@ -256,8 +243,7 @@ public class LoggerTest
 		assertTrue(logger.isFatalEnabled());
 	}
 
-	@Test
-	public void testExceptions()
+	@Test public void testExceptions()
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
@@ -269,8 +255,7 @@ public class LoggerTest
 		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testExceptions(LoggerTest.java:264)\n"));
 	}
 
-	@Test
-	public void testLoggingToFile() throws Exception
+	@Test public void testLoggingToFile() throws Exception
 	{
 		File tempFile = Files.createTempFile("test", ".log").toFile();
 
@@ -285,8 +270,7 @@ public class LoggerTest
 		assertTrue(contentsFromFile.endsWith("Name:Chris Newland Age:999 Location:QueingForCompilation\n"));
 	}
 
-	@Test
-	public void testLoggingToFileByFactory() throws Exception
+	@Test public void testLoggingToFileByFactory() throws Exception
 	{
 		File tempFile = Files.createTempFile("test", ".log").toFile();
 
