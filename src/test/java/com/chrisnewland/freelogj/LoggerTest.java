@@ -284,4 +284,20 @@ public class LoggerTest
 
 		assertTrue(contentsFromFile.endsWith("Name:Chris Newland Age:999 Location:QueingForCompilation\n"));
 	}
+
+	@Test
+	public void testLoggingToFileByFactory() throws Exception
+	{
+		File tempFile = Files.createTempFile("test", ".log").toFile();
+
+		LoggerFactory.setLogFile(tempFile.toPath());
+
+		Logger logger = LoggerFactory.getLogger(LoggerTest.class);
+
+		logger.info("Name:{} Age:{} Location:{}", "Chris Newland", 999, "QueingForCompilation");
+
+		String contentsFromFile = new String(Files.readAllBytes(tempFile.toPath()));
+
+		assertTrue(contentsFromFile.endsWith("Name:Chris Newland Age:999 Location:QueingForCompilation\n"));
+	}
 }
