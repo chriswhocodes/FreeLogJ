@@ -180,7 +180,10 @@ public class Logger
 			{
 				for (int i = argPos; i < args.length; i++)
 				{
-					((Throwable)args[i]).printStackTrace(printStream);
+					if (args[i] instanceof Throwable)
+					{
+						((Throwable) args[i]).printStackTrace(printStream);
+					}
 				}
 			}
 		}
