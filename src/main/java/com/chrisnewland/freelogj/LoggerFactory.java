@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
-import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 
 public class LoggerFactory
 {
@@ -14,7 +14,7 @@ public class LoggerFactory
 
 	private static PrintStream printStream = System.out;
 
-	private static DateFormat dateFormat = Logger.DEFAULT_DATE_FORMAT;
+	private static DateTimeFormatter dateFormat = Logger.DEFAULT_DATE_FORMAT;
 
 	public static void initialise(Logger.LogLevel logLevel)
 	{
@@ -27,7 +27,7 @@ public class LoggerFactory
 		LoggerFactory.printStream = printStream;
 	}
 
-	public static void initialise(Logger.LogLevel logLevel, PrintStream printStream, DateFormat dateFormat)
+	public static void initialise(Logger.LogLevel logLevel, PrintStream printStream, DateTimeFormatter dateFormat)
 	{
 		LoggerFactory.logLevel = logLevel;
 		LoggerFactory.printStream = printStream;

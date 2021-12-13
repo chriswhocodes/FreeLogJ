@@ -14,9 +14,8 @@ else
 package com.chrisnewland.freelogj;
 
 import java.io.PrintStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 
 public class Logger
 {
@@ -34,7 +33,7 @@ public class Logger
 		}
 	}
 
-	static final DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+	static final DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormatter.ISO_INSTANT;
 
 	private static final String BRACES = "{}";
 
@@ -42,7 +41,7 @@ public class Logger
 
 	private final LogLevel logLevel;
 
-	private final DateFormat dateFormat;
+	private final DateTimeFormatter dateFormat;
 
 	private final PrintStream printStream;
 
@@ -61,12 +60,12 @@ public class Logger
 		return new Logger(clazz, logLevel, DEFAULT_DATE_FORMAT, printStream);
 	}
 
-	public static Logger getLogger(Class<?> clazz, LogLevel logLevel, DateFormat dateFormat, PrintStream printStream)
+	public static Logger getLogger(Class<?> clazz, LogLevel logLevel, DateTimeFormatter dateFormat, PrintStream printStream)
 	{
 		return new Logger(clazz, logLevel, dateFormat, printStream);
 	}
 
-	private Logger(Class<?> clazz, LogLevel logLevel, DateFormat dateFormat, PrintStream printStream)
+	private Logger(Class<?> clazz, LogLevel logLevel, DateTimeFormatter dateFormat, PrintStream printStream)
 	{
 		this.className = clazz.getName();
 		this.logLevel = logLevel;
@@ -143,10 +142,7 @@ public class Logger
 
 		StringBuilder builder = new StringBuilder();
 
-		synchronized (dateFormat)
-		{
-			builder.append(dateFormat.format(new Date(System.currentTimeMillis())));
-		}
+		builder.append(dateFormat.format(Instant.now()));
 
 		builder.append(logLevel.display).append(className).append(' ');
 
