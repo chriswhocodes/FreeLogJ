@@ -13,7 +13,7 @@ In the meantime enjoy this simple logging framework^W class.
 
 - isXEnabled() for wrapping expensive log sections.
 
-- error() and fatal() have a no-varargs signature that accepts a Throwable to get a stack trace.
+- Any unmatched Throwable args will print a stack trace to the PrintStream.
 
 - Log levels: TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Log level is not modifiable after Logger is constructed.
 
