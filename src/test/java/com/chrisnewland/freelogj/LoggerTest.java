@@ -143,7 +143,7 @@ public class LoggerTest
 	{
 		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
 
-		logger.info(null);
+		logger.info((String)null);
 
 		checkContents("null");
 	}
@@ -343,5 +343,22 @@ public class LoggerTest
 		String contentsFromFile = new String(Files.readAllBytes(tempFile.toPath()));
 
 		assertTrue(contentsFromFile.endsWith("Name:Chris Newland Age:999 Location:QueingForCompilation\n"));
+	}
+
+	@Test
+	public void testSupplierLogging() throws Exception
+	{
+		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
+
+		// Below the log level, so won't get called
+		logger.debug(() -> { throw new RuntimeException("Nooooooo"); });
+
+		logger.error(() -> "something happened", new RuntimeException("oops"));
+
+		String contents = baos.toString();
+
+		assertFalse(contents.contains("Nooooooo"));
+		assertTrue(contents.contains("something happened"));
+		assertTrue(contents.contains("oops"));
 	}
 }

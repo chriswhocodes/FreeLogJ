@@ -16,6 +16,7 @@ package com.chrisnewland.freelogj;
 import java.io.PrintStream;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.function.Supplier;
 
 public class Logger
 {
@@ -103,9 +104,19 @@ public class Logger
 		return true;
 	}
 
+	public void trace(Supplier<String> stringSupplier, Object... args)
+	{
+		log(LogLevel.TRACE, stringSupplier, args);
+	}
+
 	public void trace(String message, Object... args)
 	{
 		log(LogLevel.TRACE, message, args);
+	}
+
+	public void debug(Supplier<String> stringSupplier, Object... args)
+	{
+		log(LogLevel.DEBUG, stringSupplier, args);
 	}
 
 	public void debug(String message, Object... args)
@@ -113,9 +124,19 @@ public class Logger
 		log(LogLevel.DEBUG, message, args);
 	}
 
+	public void info(Supplier<String> stringSupplier, Object... args)
+	{
+		log(LogLevel.INFO, stringSupplier, args);
+	}
+
 	public void info(String message, Object... args)
 	{
 		log(LogLevel.INFO, message, args);
+	}
+
+	public void warn(Supplier<String> stringSupplier, Object... args)
+	{
+		log(LogLevel.WARN, stringSupplier, args);
 	}
 
 	public void warn(String message, Object... args)
@@ -123,14 +144,34 @@ public class Logger
 		log(LogLevel.WARN, message, args);
 	}
 
+	public void error(Supplier<String> stringSupplier, Object... args)
+	{
+		log(LogLevel.ERROR, stringSupplier, args);
+	}
+
 	public void error(String message, Object... args)
 	{
 		log(LogLevel.ERROR, message, args);
 	}
 
+	public void fatal(Supplier<String> stringSupplier, Object... args)
+	{
+		log(LogLevel.FATAL, stringSupplier, args);
+	}
+
 	public void fatal(String message, Object... args)
 	{
 		log(LogLevel.FATAL, message, args);
+	}
+
+	private void log(LogLevel logLevel, Supplier<String> stringSupplier, Object... args)
+	{
+		if (logLevel.level < this.logLevel.level)
+		{
+			return;
+		}
+
+		log(logLevel, stringSupplier.get(), args);
 	}
 
 	private void log(LogLevel logLevel, String message, Object... args)
