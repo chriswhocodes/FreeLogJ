@@ -252,7 +252,22 @@ public class LoggerTest
 		String contents = baos.toString();
 
 		assertTrue(contents.contains("java.lang.RuntimeException: oops\n"));
-		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testExceptions(LoggerTest.java:264)\n"));
+		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testExceptions(LoggerTest.java:"));
+	}
+
+	@Test public void testMultipleExceptions()
+	{
+		Logger logger = Logger.getLogger(LoggerTest.class, logLevel, printStream);
+
+		logger.error("something happened", new RuntimeException("oops"), new Throwable("really bad"));
+
+		String contents = baos.toString();
+
+		assertTrue(contents.contains("java.lang.RuntimeException: oops\n"));
+		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testMultipleExceptions(LoggerTest.java:"));
+
+		assertTrue(contents.contains("java.lang.Throwable: really bad\n"));
+		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testMultipleExceptions(LoggerTest.java:"));
 	}
 
 	@Test public void testLoggingToFile() throws Exception

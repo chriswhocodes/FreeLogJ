@@ -129,21 +129,9 @@ public class Logger
 		log(LogLevel.ERROR, message, args);
 	}
 
-	public void error(String message, Throwable throwable)
-	{
-		log(LogLevel.ERROR, message);
-		throwable.printStackTrace(printStream);
-	}
-
 	public void fatal(String message, Object... args)
 	{
 		log(LogLevel.FATAL, message, args);
-	}
-
-	public void fatal(String message, Throwable throwable)
-	{
-		log(LogLevel.FATAL, message);
-		throwable.printStackTrace(printStream);
 	}
 
 	private void log(LogLevel logLevel, String message, Object... args)
@@ -184,42 +172,22 @@ public class Logger
 			{
 				builder.append(message, messagePos, messageLength);
 			}
+
+			printStream.println(builder);
+
+			// if there are remaining args that are Throwable then print stack traces
+			if (argPos < args.length)
+			{
+				for (int i = argPos; i < args.length; i++)
+				{
+					((Throwable)args[i]).printStackTrace(printStream);
+				}
+			}
 		}
 		else
 		{
 			builder.append(message);
-		}
-
-		printStream.println(builder);
-	}
-
-	public static void main(String[] args)
-	{
-		final Logger logger = LoggerFactory.getLogger(Logger.class);
-
-		for (int i = 0; i < 10; i++)
-		{
-			final int id = i;
-
-			new Thread(new Runnable()
-			{
-				@Override public void run()
-				{
-					for (int i = 0; i < 10; i++)
-					{
-						logger.info("Print id " + i + " from thread " + id);
-
-						try
-						{
-							Thread.sleep(1000);
-						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
-						}
-					}
-				}
-			}).start();
+			printStream.println(builder);
 		}
 	}
 }
