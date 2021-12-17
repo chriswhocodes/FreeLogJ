@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Chris Newland (@chriswhocodes)
+/* Copyright (c) 2021, Chris Newland (@chriswhocodes) */
 
 package com.chrisnewland.freelogj;
 
@@ -115,7 +115,8 @@ public class LoggerTest
 
 		assertTrue(contents.contains("The value is 1\n"));
 		assertTrue(contents.contains("java.lang.Throwable: oops\n"));
-		assertTrue(contents.contains("at com.chrisnewland.freelogj.LoggerTest.testMoreParamsThanBracesWithException(LoggerTest.java:"));
+		assertTrue(contents.contains(
+				"at com.chrisnewland.freelogj.LoggerTest.testMoreParamsThanBracesWithException(LoggerTest.java:"));
 	}
 
 	@Test

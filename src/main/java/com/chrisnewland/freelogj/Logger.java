@@ -1,15 +1,4 @@
-/* Copyright (c) 2021, Chris Newland (@chriswhocodes)
-
-if (you need a fully featured logging framework)
-{
-      Take some time to understand its feature set (including the security risks of unused features)
-      Start a conversation in your company about supporting open source maintainers!
-}
-else
-{
-      Enjoy this tiny and simple logging class!
-}
- */
+/* Copyright (c) 2021, Chris Newland (@chriswhocodes) */
 
 package com.chrisnewland.freelogj;
 
@@ -21,7 +10,12 @@ public class Logger
 {
 	public enum LogLevel
 	{
-		TRACE(" TRC ", 0), DEBUG(" DBG ", 1), INFO(" INF ", 2), WARN(" WRN ", 3), ERROR(" ERR ", 4), FATAL(" FTL ", 5);
+		TRACE(" TRC ", 0),
+		DEBUG(" DBG ", 1),
+		INFO(" INF ", 2),
+		WARN(" WRN ", 3),
+		ERROR(" ERR ", 4),
+		FATAL(" FTL ", 5);
 
 		final String display;
 		private final int level;
@@ -45,21 +39,41 @@ public class Logger
 
 	private final PrintStream printStream;
 
+	/**
+	 * Returns a Logger for the given Class. The fully qualified class name is printed on each log line.
+	 *
+	 * @param clazz The class to be logged
+	 */
 	public static Logger getLogger(Class<?> clazz)
 	{
 		return new Logger(clazz, LogLevel.INFO, DEFAULT_DATE_FORMAT, System.out);
 	}
 
+	/**
+	 * Returns a Logger for the given Class and LogLevel. The fully qualified class name is printed on each log line.
+	 *
+	 * @param clazz The class to be logged
+	 */
 	public static Logger getLogger(Class<?> clazz, LogLevel logLevel)
 	{
 		return new Logger(clazz, logLevel, DEFAULT_DATE_FORMAT, System.out);
 	}
 
+	/**
+	 * Returns a Logger for the given Class and LogLevel and {@link PrintStream}. The fully qualified class name is printed on each log line.
+	 *
+	 * @param clazz The class to be logged
+	 */
 	public static Logger getLogger(Class<?> clazz, LogLevel logLevel, PrintStream printStream)
 	{
 		return new Logger(clazz, logLevel, DEFAULT_DATE_FORMAT, printStream);
 	}
 
+	/**
+	 * Returns a Logger for the given Class, LogLevel, {@link DateTimeFormatter,} and {@link PrintStream}. The fully qualified class name is printed on each log line.
+	 *
+	 * @param clazz The class to be logged
+	 */
 	public static Logger getLogger(Class<?> clazz, LogLevel logLevel, DateTimeFormatter dateFormat, PrintStream printStream)
 	{
 		return new Logger(clazz, logLevel, dateFormat, printStream);
@@ -73,61 +87,115 @@ public class Logger
 		this.printStream = printStream;
 	}
 
+	/**
+	 * @return true if the TRACE {@link LogLevel} is enabled.
+	 */
 	public boolean isTraceEnabled()
 	{
 		return this.logLevel.level <= LogLevel.TRACE.level;
 	}
 
+	/**
+	 * @return true if the DEBUG {@link LogLevel} is enabled.
+	 */
 	public boolean isDebugEnabled()
 	{
 		return this.logLevel.level <= LogLevel.DEBUG.level;
 	}
 
+	/**
+	 * @return true if the INFO {@link LogLevel} is enabled.
+	 */
 	public boolean isInfoEnabled()
 	{
 		return this.logLevel.level <= LogLevel.INFO.level;
 	}
 
+	/**
+	 * @return true if the WARN {@link LogLevel} is enabled.
+	 */
 	public boolean isWarnEnabled()
 	{
 		return this.logLevel.level <= LogLevel.WARN.level;
 	}
 
+	/**
+	 * @return true if the ERROR {@link LogLevel} is enabled.
+	 */
 	public boolean isErrorEnabled()
 	{
 		return this.logLevel.level <= LogLevel.ERROR.level;
 	}
 
+	/**
+	 * @return true if the FATAL {@link LogLevel} is enabled.
+	 */
 	public boolean isFatalEnabled()
 	{
 		return true;
 	}
 
+	/**
+	 * Output a message at the TRACE {@link LogLevel}.
+	 *
+	 * @param message The message to output.
+	 * @param args Arguments to be substituted for {} in the message String.
+	 */
 	public void trace(String message, Object... args)
 	{
 		log(LogLevel.TRACE, message, args);
 	}
 
+	/**
+	 * Output a message at the DEBUG {@link LogLevel}.
+	 *
+	 * @param message The message to output.
+	 * @param args Arguments to be substituted for {} in the message String.
+	 */
 	public void debug(String message, Object... args)
 	{
 		log(LogLevel.DEBUG, message, args);
 	}
 
+	/**
+	 * Output a message at the INFO {@link LogLevel}.
+	 *
+	 * @param message The message to output.
+	 * @param args Arguments to be substituted for {} in the message String.
+	 */
 	public void info(String message, Object... args)
 	{
 		log(LogLevel.INFO, message, args);
 	}
 
+	/**
+	 * Output a message at the WARN {@link LogLevel}.
+	 *
+	 * @param message The message to output.
+	 * @param args Arguments to be substituted for {} in the message String.
+	 */
 	public void warn(String message, Object... args)
 	{
 		log(LogLevel.WARN, message, args);
 	}
 
+	/**
+	 * Output a message at the ERROR {@link LogLevel}.
+	 *
+	 * @param message The message to output.
+	 * @param args Arguments to be substituted for {} in the message String.
+	 */
 	public void error(String message, Object... args)
 	{
 		log(LogLevel.ERROR, message, args);
 	}
 
+	/**
+	 * Output a message at the FATAL {@link LogLevel}.
+	 *
+	 * @param message The message to output.
+	 * @param args Arguments to be substituted for {} in the message String.
+	 */
 	public void fatal(String message, Object... args)
 	{
 		log(LogLevel.FATAL, message, args);
@@ -144,7 +212,9 @@ public class Logger
 
 		builder.append(dateFormat.format(Instant.now()));
 
-		builder.append(logLevel.display).append(className).append(' ');
+		builder.append(logLevel.display)
+			   .append(className)
+			   .append(' ');
 
 		if (message != null && args != null && args.length > 0)
 		{
@@ -171,7 +241,7 @@ public class Logger
 
 			printStream.println(builder);
 
-			// if there are remaining args that are Throwable then print stack traces
+			// Print stack traces if any remaining args are Throwable
 			if (argPos < args.length)
 			{
 				for (int i = argPos; i < args.length; i++)
