@@ -70,7 +70,7 @@ public class Logger
 	}
 
 	/**
-	 * Returns a Logger for the given Class, LogLevel, {@link DateTimeFormatter,} and {@link PrintStream}. The fully qualified class name is printed on each log line.
+	 * Returns a Logger for the given Class, LogLevel, {@link DateTimeFormatter}, and {@link PrintStream}. The fully qualified class name is printed on each log line.
 	 *
 	 * @param clazz The class to be logged
 	 */
