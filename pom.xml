@@ -5,7 +5,7 @@
 
     <groupId>com.chrisnewland</groupId>
     <artifactId>FreeLogJ</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>FreeLogJ</name>
 
     <properties>
@@ -14,6 +14,46 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <description>Simple logging library</description>
+    <url>https://github.com/chriswhocodes/FreeLogJ</url>
+    <inceptionYear>2021</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>Simplified BSD License</name>
+            <url>http://opensource.org/licenses/BSD-2-Clause</url>
+            <distribution>repo</distribution>
+            <comments>Simplified BSD License</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Chris Newland</name>
+            <url>https://www.chriswhocodes.com</url>
+            <email>chris@chrisnewland.com</email>
+            <timezone>GMT</timezone>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Tim Yates</name>
+            <timezone>GMT</timezone>
+        </contributor>
+    </contributors>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/chriswhocodes/FreeLogJ/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:https://github.com/chriswhocodes/FreeLogJ.git</connection>
+        <developerConnection>scm:git:git@github.com:chriswhocodes/FreeLogJ.git</developerConnection>
+        <url>${project.url}</url>
+    </scm>
+    
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -91,7 +131,7 @@
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
 
